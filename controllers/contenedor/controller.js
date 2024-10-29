@@ -1,5 +1,5 @@
 import { response } from "express";
-import { prisma } from "../../prisma/prismaClient"
+import { prisma } from "../../prismaClient.js";
 
 const obtenerContenedores = async (req, res = response) => {
   try {
