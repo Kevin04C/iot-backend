@@ -8,13 +8,14 @@ datasource db {
 }
 
 model contenedor {
-  contenedor_id            Int       @id @default(autoincrement())
-  contenedor_identificador String    @unique(map: "contenedor_identidicador_UNIQUE") @db.VarChar(50)
-  contenedor_peso          Decimal?  @db.Decimal(14, 2)
-  contenedor_humedad       Decimal?  @db.Decimal(14, 2)
-  contenedor_posicion      String?   @db.VarChar(50)
-  contenedor_fecha         DateTime? @db.DateTime(0)
-  contenedor_activo        Int       @db.TinyInt
-  contenedor_imagen        String?   @db.VarChar(255)
-  contenedor_imagenidentidicador        String?   @db.VarChar(255)
-}   
+  contenedor_id                  Int       @id @default(autoincrement())
+  contenedor_identificador       String    @unique(map: "contenedor_identidicador_UNIQUE") @db.VarChar(50)
+  contenedor_peso                Decimal?  @db.Decimal(14, 2)
+  contenedor_humedad             Decimal?  @db.Decimal(14, 2)
+  contenedor_posicion            String?   @db.VarChar(50)
+  contenedor_fecha               DateTime? @db.DateTime(0)
+  contenedor_imagenidentidicador String?   @db.VarChar(255)
+  contenedor_imagen              String?   @db.VarChar(255)
+  contenedor_temperatura         Decimal?  @db.Decimal(14, 2)
+  contenedor_activo              Int       @db.TinyInt
+}
