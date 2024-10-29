@@ -11,7 +11,7 @@ const obtenerContenedores = async (req, res = response) => {
     return res.status(200).json({
       statusCode: 200,
       data: contenedores,
-      message: 'Contenedores'
+      message: null
     })
   } catch (error) {
     console.log(error)
