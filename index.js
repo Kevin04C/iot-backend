@@ -1,5 +1,6 @@
 import express from 'express';
 import { config } from 'dotenv';
+import ContenedorRoutes from './routes/contenedor/route.js';
 config();
 
 const PORT = process.env.PORT || 3000;
@@ -7,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 
+app.use("/api/contenedor", ContenedorRoutes);
 
 app.get('/ping', (req, res) => {
   res.json({ message: 'pong' });
