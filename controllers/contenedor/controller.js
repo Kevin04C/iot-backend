@@ -21,24 +21,19 @@ const obtenerContenedores = async (req, res = response) => {
 const crearContenedor = async (req = request, res = response) => {
   const { body } = req;
   try {
-
     
-
-    // const contenedor = await prisma.contenedor.create({
-    //   data: {
-    //     ...body,
-    //     contenedor_activo: true,
-    //   }
-    // })
-
     const contenedorData = {
-      contendor_nombre: req.file,
+      ...body,
       contenedor_activo: true
     }
 
+    const contenedor = await prisma.contenedor.create({
+      data: contenedorData
+    })
+
     return res.status(201).json({
       statusCode: 201,
-      data: contenedorData,
+      data: contenedor,
       message: 'Contenedor creado con exito'
     })
   } catch (err) {
