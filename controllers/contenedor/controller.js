@@ -27,9 +27,9 @@ const crearContenedor = async (req = request, res = response) => {
   try {
     const identificador = body.contenedor_identificador;
 
-    const contenedorExistente = await prisma.contenedor.findFirst({
+    const contenedorExistente = await prisma.contenedor.findUnique({
       where: {
-        contenedor_identificador: identificador
+        contenedor_identificador
       }
     });
 
