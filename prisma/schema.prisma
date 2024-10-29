@@ -15,4 +15,6 @@ model contenedor {
   contenedor_posicion      String?   @db.VarChar(50)
   contenedor_fecha         DateTime? @db.DateTime(0)
   contenedor_activo        Int       @db.TinyInt
-}
+  contenedor_imagen        String?   @db.VarChar(255)
+  contenedor_imagenidentidicador        String?   @db.VarChar(255)
+}   
