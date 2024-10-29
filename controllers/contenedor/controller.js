@@ -1,5 +1,9 @@
 import { request, response } from "express";
 import { prisma } from "../../prismaClient.js";
+import { ACTIVO, FOLDER_IMG_CONTENEDORES } from "../../shared/consts.js";
+import CloudinaryService from "../../shared/services/Cloudinary.service.js";
+import { unlink } from 'fs/promises'
+
 
 const obtenerContenedores = async (req, res = response) => {
   try {
@@ -19,24 +23,47 @@ const obtenerContenedores = async (req, res = response) => {
 }
 
 const crearContenedor = async (req = request, res = response) => {
-  const { body } = req;
+  const body = req.body;
   try {
-    
-    const contenedorData = {
-      ...body,
-      contenedor_activo: true
+    const identificador = body.contenedor_identificador;
+
+    const contenedorExistente = await prisma.contenedor.findFirst({
+      where: {
+        contenedor_identificador: identificador
+      }
+    });
+
+    if(contenedorExistente) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: `El contenedor con identificador ${identificador} ya existe`
+      })
     }
 
-    const contenedor = await prisma.contenedor.create({
-      data: contenedorData
+    const { url, public_id } = await CloudinaryService.uploadFile({
+      file: req.file.path,
+      folder: FOLDER_IMG_CONTENEDORES
+    });
+
+    const contenedorCreated = await prisma.contenedor.create({
+      data: {
+        ...body,
+        contenedor_activo: ACTIVO,
+        contenedor_imagen: url,
+        contenedor_imagenidentidicador: public_id
+      }
     })
+
+    unlink(req.file.path);
 
     return res.status(201).json({
       statusCode: 201,
-      data: contenedor,
+      data: contenedorCreated,
       message: 'Contenedor creado con exito'
     })
   } catch (err) {
+    console.log(err);
+
     if(err instanceof Error) {
       return res.status(400).json({
         statusCode: 400,

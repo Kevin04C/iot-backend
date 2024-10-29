@@ -6,15 +6,21 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
-const uploadFile = async (file) => {
+const uploadFile = async ({ folder, file }) => {
   try {
-    const result = await cloudinary.uploader.upload(file.path)
-    return result
+    const result = await cloudinary.uploader.upload(file, {
+      folder: folder,
+    });
+
+    const response = { 
+      url: result.secure_url,
+      public_id: result.public_id
+    }
+
+    return response;
   } catch(error) {
     throw new Error("Error al subir el archivo a Cloudinary")
   }
 }
 
-export default {
-  uploadFile
-}
+export default { uploadFile }
