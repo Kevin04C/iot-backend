@@ -1,7 +1,7 @@
 import express from 'express';
 import { config } from 'dotenv';
-import ContenedorRoutes from './routes/contenedor/route.js';
 config();
+import ContenedorRoutes from './routes/contenedor/route.js';
 
 const PORT = process.env.PORT || 3000;
 
