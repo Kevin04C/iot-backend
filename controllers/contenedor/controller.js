@@ -3,6 +3,7 @@ import { prisma } from "../../prismaClient.js";
 import { ACTIVO, FOLDER_IMG_CONTENEDORES } from "../../shared/consts.js";
 import CloudinaryService from "../../shared/services/Cloudinary.service.js";
 import { unlink } from 'fs/promises'
+import DateUtilityService from "../../shared/services/DateUtility.service.js";
 
 
 const obtenerContenedores = async (req, res = response) => {
@@ -25,11 +26,12 @@ const obtenerContenedores = async (req, res = response) => {
 const crearContenedor = async (req = request, res = response) => {
   const body = req.body;
   try {
+    console.log(body);
     const identificador = body.contenedor_identificador;
 
-    const contenedorExistente = await prisma.contenedor.findUnique({
+    const contenedorExistente = await prisma.contenedor.findFirst({
       where: {
-        contenedor_identificador
+        contenedor_identificador: identificador
       }
     });
 
@@ -50,7 +52,8 @@ const crearContenedor = async (req = request, res = response) => {
         ...body,
         contenedor_activo: ACTIVO,
         contenedor_imagen: url,
-        contenedor_imagenidentidicador: public_id
+        contenedor_imagenidentidicador: public_id,
+        contenedor_fecha: DateUtilityService.obtenerFechaActual()
       }
     })
 
