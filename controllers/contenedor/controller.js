@@ -42,22 +42,40 @@ const crearContenedor = async (req = request, res = response) => {
       })
     }
 
-    const { url, public_id } = await CloudinaryService.uploadFile({
-      file: req.file.path,
-      folder: FOLDER_IMG_CONTENEDORES
-    });
+    /** Los datos de la img cuando se insertan */
+    let url = null;
+    let public_id = null;
+
+    /** Si viene una img la agrego */
+    if(req.file.path) {
+      const { url, public_id } = await CloudinaryService.uploadFile({
+        file: req.file.path,
+        folder: FOLDER_IMG_CONTENEDORES
+      });
+  
+      url = url;
+      public_id = public_id;
+
+      unlink(req.file.path);
+    }
+
+
+    const dataContendor = {
+      ...body,
+        contenedor_activo: ACTIVO,
+        // contenedor_imagen: url,
+        // contenedor_imagenidentidicador: public_id,
+        contenedor_fecha: DateUtilityService.obtenerFechaActual()
+    }
+
+    if(req.file) {
+      dataContendor.contenedor_imagen = url;
+      dataContendor.contenedor_imagenidentidicador = public_id;
+    }
 
     const contenedorCreated = await prisma.contenedor.create({
-      data: {
-        ...body,
-        contenedor_activo: ACTIVO,
-        contenedor_imagen: url,
-        contenedor_imagenidentidicador: public_id,
-        contenedor_fecha: DateUtilityService.obtenerFechaActual()
-      }
+      data: dataContendor
     })
-
-    unlink(req.file.path);
 
     return res.status(201).json({
       statusCode: 201,
