@@ -68,7 +68,7 @@ const crearContenedor = async (req = request, res = response) => {
         contenedor_fecha: DateUtilityService.obtenerFechaActual()
     }
 
-    if(req.file) {
+    if(req.file.path) {
       dataContendor.contenedor_imagen = url;
       dataContendor.contenedor_imagenidentidicador = public_id;
     }
