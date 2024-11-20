@@ -47,7 +47,7 @@ const crearContenedor = async (req = request, res = response) => {
     let public_id = null;
 
     /** Si viene una img la agrego */
-    if(req.file.path) {
+    if(req.file && req.file.path) {
       const { url, public_id } = await CloudinaryService.uploadFile({
         file: req.file.path,
         folder: FOLDER_IMG_CONTENEDORES
@@ -68,7 +68,7 @@ const crearContenedor = async (req = request, res = response) => {
         contenedor_fecha: DateUtilityService.obtenerFechaActual()
     }
 
-    if(req.file.path) {
+    if(req.file && req.file.path) {
       dataContendor.contenedor_imagen = url;
       dataContendor.contenedor_imagenidentidicador = public_id;
     }
