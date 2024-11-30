@@ -13,7 +13,6 @@ const obtenerContenedores = async (req, res = response) => {
     const contenedorIndetificador = req.query.contenedor_identificador || null;
     const contenedorActivo = req.query.contenedor_activo || null;
 
-
     let whereParams = {};
 
     if(contenedorIndetificador) {
