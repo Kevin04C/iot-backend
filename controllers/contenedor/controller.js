@@ -8,10 +8,44 @@ import DateUtilityService from "../../shared/services/DateUtility.service.js";
 
 const obtenerContenedores = async (req, res = response) => {
   try {
-    const contenedores = await prisma.contenedor.findMany();
+    const paginaActual = parseInt(req.query.pagina) || 1;
+    const cantidadRegistros = parseInt(req.query.cantidad) || 10;
+    const contenedorIndetificador = req.query.contenedor_identificador || null;
+    
+    let whereParams = {};
+
+    if(contenedorIndetificador) {
+      whereParams = {
+        contenedor_identificador: {
+          contains: contenedorIndetificador
+        }
+      }
+    }
+
+    const skip = (paginaActual - 1) * cantidadRegistros;
+    const take = cantidadRegistros;
+
+    const contenedores = await prisma.contenedor.findMany({
+      where: whereParams,
+      skip,
+      take,
+    });
+
+    const totalContenedores = await prisma.contenedor.count({
+      where: whereParams
+    });
+
+    const totalPaginas = Math.ceil(totalContenedores / cantidadRegistros); 
+
     return res.status(200).json({
       statusCode: 200,
       data: contenedores,
+      pagination: {
+        total: totalContenedores,
+        paginaActual,
+        totalPaginas,
+        cantidadRegistros
+      },
       message: null
     })
   } catch (error) {
