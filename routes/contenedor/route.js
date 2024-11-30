@@ -6,5 +6,6 @@ const router = Router()
 
 router.get("/", ContenedorController.obtenerContenedores);
 router.post("/", uplaod.single('contenedor_imagen'), ContenedorController.crearContenedor);
+router.put("/:id", ContenedorController.actualizarContenedor);
 
 export default router;

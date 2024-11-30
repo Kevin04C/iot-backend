@@ -132,8 +132,49 @@ const crearContenedor = async (req = request, res = response) => {
   }
 }
 
+const actualizarContenedor = async (req = request, res = response) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+
+    const contenedor = await prisma.contenedor.findUnique({
+      where: {
+        contenedor_id: parseInt(id)
+      }
+    });
+
+    if(!contenedor) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: 'Contenedor no encontrado'
+      })
+    }
+
+    const contenedorUpdated = await prisma.contenedor.update({
+      where: {
+        contenedor_id: parseInt(id)
+      },
+      data: body
+    })
+
+    return res.status(200).json({
+      statusCode: 200,
+      data: contenedorUpdated,
+      message: 'Contenedor actualizado con exito'
+    })
+
+
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      statusCode: 500,
+      message: 'Internal server error'
+    })
+  }
+}
 
 export default {
   obtenerContenedores,
-  crearContenedor
+  crearContenedor,
+  actualizarContenedor
 }
