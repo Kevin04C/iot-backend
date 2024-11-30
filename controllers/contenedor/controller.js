@@ -11,7 +11,9 @@ const obtenerContenedores = async (req, res = response) => {
     const paginaActual = parseInt(req.query.pagina) || 1;
     const cantidadRegistros = parseInt(req.query.cantidad) || 10;
     const contenedorIndetificador = req.query.contenedor_identificador || null;
-    
+    const contenedorActivo = req.query.contenedor_activo || null;
+
+
     let whereParams = {};
 
     if(contenedorIndetificador) {
@@ -21,6 +23,16 @@ const obtenerContenedores = async (req, res = response) => {
         }
       }
     }
+
+    if(contenedorActivo) {
+      whereParams = {
+        ...whereParams,
+        contenedor_activo: {
+          equals: Number(contenedorActivo)
+        }
+      }
+    }
+
 
     const skip = (paginaActual - 1) * cantidadRegistros;
     const take = cantidadRegistros;
