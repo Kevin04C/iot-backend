@@ -8,8 +8,8 @@ import DateUtilityService from "../../shared/services/DateUtility.service.js";
 
 const obtenerContenedores = async (req, res = response) => {
   try {
-    const paginaActual = parseInt(req.query.pagina) || 1;
-    const cantidadRegistros = parseInt(req.query.cantidad) || 10;
+    const paginaActual = parseInt(req.query.paginaActual) || 1;
+    const cantidadRegistros = parseInt(req.query.cantidadPorPagina) || 10;
     const contenedorIndetificador = req.query.contenedor_identificador || null;
     const contenedorActivo = req.query.contenedor_activo || null;
 
