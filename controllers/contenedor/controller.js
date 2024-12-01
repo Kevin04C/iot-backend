@@ -234,7 +234,8 @@ const obtenerInformacionDashboard = async (req = request, res = response) => {
     const serializedResult = JSON.parse(JSON.stringify(result, serializeBigInt));
 
     serializedResult.forEach((registro) => {
-      contenedoresPorHora.labels.push(registro.hora);
+      let hora = registro.hora + ":00";
+      contenedoresPorHora.labels.push(hora);
       contenedoresPorHora.values.push(registro.total);      
     });
 
