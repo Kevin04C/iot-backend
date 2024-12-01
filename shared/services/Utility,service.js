@@ -1,3 +1,3 @@
-class UtilityService {
+export class UtilityService {
   static logs = [];
 }
