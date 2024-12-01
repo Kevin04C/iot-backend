@@ -12,6 +12,12 @@ const obtenerContenedores = async (req, res = response) => {
     const cantidadRegistros = parseInt(req.query.cantidadPorPagina) || 10;
     const contenedorIndetificador = req.query.contenedor_identificador || null;
     const contenedorActivo = req.query.contenedor_activo || null;
+    
+    console.log("paginaActual");
+    console.log(paginaActual);
+    console.log("cantidadRegistros");
+    console.log(cantidadRegistros);
+
 
     let whereParams = {};
 
@@ -42,7 +48,7 @@ const obtenerContenedores = async (req, res = response) => {
       take,
     });
 
-    
+
     const totalContenedores = await prisma.contenedor.count({
       where: whereParams
     });
