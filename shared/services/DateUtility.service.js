@@ -4,4 +4,13 @@ const obtenerFechaActual = () => {
   return format(new Date(), "yyyy-MM-dd'T'HH:mm:ss'Z'");
 };
 
-export default { obtenerFechaActual };
+const obtenerFechaCorta = () => {
+  const fechaActual = new Date();
+  const fechaFormateada = format(fechaActual, 'yyyy-MM-dd'); // Solo la fecha
+  return fechaFormateada;
+}
+
+export default { 
+  obtenerFechaActual,
+  obtenerFechaCorta
+};
