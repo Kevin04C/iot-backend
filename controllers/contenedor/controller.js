@@ -42,6 +42,7 @@ const obtenerContenedores = async (req, res = response) => {
       take,
     });
 
+    
     const totalContenedores = await prisma.contenedor.count({
       where: whereParams
     });
