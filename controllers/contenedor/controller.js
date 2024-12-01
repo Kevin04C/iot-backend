@@ -13,11 +13,9 @@ const obtenerContenedores = async (req, res = response) => {
     const contenedorIndetificador = req.query.contenedor_identificador || null;
     const contenedorActivo = req.query.contenedor_activo || null;
     
-    console.log("paginaActual");
-    console.log(paginaActual);
-    console.log("cantidadRegistros");
-    console.log(cantidadRegistros);
 
+    UtilityService.logs.push("Pagina actual: " + paginaActual); 
+    UtilityService.logs.push("Cantidad registros: " + cantidadRegistros); 
 
     let whereParams = {};
 
@@ -64,6 +62,7 @@ const obtenerContenedores = async (req, res = response) => {
         totalPaginas,
         cantidadRegistros
       },
+      logs: UtilityService.logs,
       message: null
     })
   } catch (error) {

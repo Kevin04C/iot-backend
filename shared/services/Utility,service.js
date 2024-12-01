@@ -1,0 +1,3 @@
+class UtilityService {
+  static logs = [];
+}
