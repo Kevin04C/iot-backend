@@ -1,5 +1,6 @@
 import express from 'express';
 import { config } from 'dotenv';
+import cors from 'cors'
 config();
 import ContenedorRoutes from './routes/contenedor/route.js';
 
@@ -7,6 +8,7 @@ const PORT = process.env.PORT || 4500;
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/contenedor", ContenedorRoutes);
 
