@@ -8,7 +8,9 @@ const PORT = process.env.PORT || 4500;
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
 
 app.use("/api/contenedor", ContenedorRoutes);
 
